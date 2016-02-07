@@ -100,7 +100,7 @@ bool functionName( void ) { \
 	const static char strAssertionFailed[] = "Assertion failed on line "; \
 	static char message[128] = {0}; \
 	\
-	static int taskCount; \
+	static int taskCount = 0; \
 	ETFTestFunction testFunction = NULL; \
 	static ETFResultType result = { .line = 0 }; \
 	const ETFResultCallback callback = callbackFunction; \
@@ -133,15 +133,17 @@ bool functionName( void ) { \
 #define ETF_RUNTEST( test, task, count )  do { \
 			testID = __COUNTER__ + 1; \
 			taskCount = 0; \
+		case __COUNTER__: \
 			testFunction = task; \
-			if ( testFunction != NULL && result.line == 0 ) { \
+			if ( testFunction != NULL && taskCount < count && result.line == 0 ) { \
 				ETF_FUNCTIONVAR( task ); \
 				testFunction( &result ); \
 				taskCount++; \
 				return false; \
 			} \
+			testID = __COUNTER__ + 1; \
 			testFunction = test; \
-			if ( taskCount == count && testFunction != NULL && result.line == 0 ) { \
+			if ( testFunction != NULL && result.line == 0 ) { \
 				ETF_FUNCTIONVAR( test ); \
 				testFunction( &result ); \
 			} \
