@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 
-#include "ETF.h"
+#include "Inc/ETF.h"
 
 void TestSuiteCallback( bool passed, const char* message, const ETFResultType* result )
 {
