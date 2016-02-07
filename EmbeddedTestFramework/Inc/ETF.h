@@ -125,7 +125,7 @@ bool functionName( void ) { \
 /**
  * Helper macros to define a static string variable containing the test case name
  */
-#define ETF_FUNCTIONVAR( functionName_ ) result.functionName = #functionName_;
+#define ETF_FUNCTIONVAR( functionName_ ) const static char functionName[] = #functionName_; result.functionName = functionName;
 
 /**
  * Run a test/task
@@ -172,7 +172,7 @@ void testCaseName( ETFResultType* result )
 /**
  * Helper macros to define a static string variable containing the line number
  */
-#define ETF_LINEVAR2( lineNumber ) const static char line##lineNumber[] = #lineNumber; result->lineName = line##lineNumber;
+#define ETF_LINEVAR2( lineNumber ) const static char lineName[] = #lineNumber; result->lineName = lineName;
 #define ETF_LINEVAR( lineNumber ) ETF_LINEVAR2( lineNumber )
 
 /**
